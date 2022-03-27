@@ -19,16 +19,17 @@
 
 
 const { Telegraf } = require('telegraf')
-// Telegram API token який ми отримали 
-const token = require('./const')
+// Telegram API token який ми отримали
+const token = "5135783195:AAEyAiuUiufSmRFXneQ9klYKL60rh7M3LJY"
 // створення бота
-const bot = new Telegraf(token.token);
-const imported = require('./const')
+const bot = new Telegraf(token);
+const imconst = require('./const')
 // початок діалогу з ботом 
 bot.start((ctx) =>
    ctx.reply("Миру нам!")
 );
-bot.help((ctx) => ctx.reply(imported.commands))
+bot.command("inline", (ctx) => {ctx.reply(imconst.commands)});
+bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.command("inline", (ctx) => {
@@ -47,7 +48,6 @@ bot.command("inline", (ctx) => {
         }
     });
 });
-
 // запуск бота
 module.exports = {
    bot,
