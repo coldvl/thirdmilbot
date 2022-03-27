@@ -19,18 +19,34 @@
 
 
 const { Telegraf } = require('telegraf')
-// Telegram API token який ми отримали
-const token = "5135783195:AAEyAiuUiufSmRFXneQ9klYKL60rh7M3LJY"
+// Telegram API token який ми отримали 
+const token = require('./const')
 // створення бота
-const bot = new Telegraf(token);
+const bot = new Telegraf(token.token);
+const imported = require('./const')
 // початок діалогу з ботом 
 bot.start((ctx) =>
    ctx.reply("Миру нам!")
 );
-bot.help((ctx) => ctx.reply('Send me a sticker'))
+bot.help((ctx) => ctx.reply(imported.commands))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.command("inline", (ctx) => {
+    ctx.reply("Hi there!", {
+        reply_markup: {
+            inline_keyboard: [
+                /* Inline buttons. 2 side-by-side */
+                [ { text: "Button 1", callback_data: "btn-1" }, { text: "Button 2", callback_data: "btn-2" } ],
 
+                /* One button */
+                [ { text: "Next", callback_data: "next" } ],
+                
+                /* Also, we can have URL buttons. */
+                [ { text: "Open in browser", url: "telegraf.js.org" } ]
+            ]
+        }
+    });
+});
 
 // запуск бота
 module.exports = {
